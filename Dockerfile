@@ -1,18 +1,16 @@
-# Usa una imagen oficial de OpenJDK
-FROM eclipse-temurin:17-jdk
+# Usa Maven con JDK 17 preinstalado
+FROM maven:3.9.6-eclipse-temurin-17
 
-# Directorio de trabajo dentro del contenedor
 WORKDIR /app
 
-# Copia todo el proyecto y da permisos al wrapper
-COPY . /app
-RUN chmod +x mvnw
+# Copia todos los archivos al contenedor
+COPY . .
 
-# Construye usando Maven sin test
-RUN ./mvnw clean package -DskipTests
+# Construye el proyecto (sin tests para velocidad)
+RUN mvn clean package -DskipTests
 
-# Expone el puerto que usará Spring Boot
+# Expone el puerto por defecto de Spring Boot
 EXPOSE 8080
 
-# Ejecuta la aplicación
-CMD ["java", "-jar", "target/crepelandia-backend-1.0.0.jar.original"]
+# Ejecuta el JAR generado
+CMD ["java", "-jar", "target/crepelandia-0.0.1-SNAPSHOT.jar"]
