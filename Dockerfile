@@ -13,4 +13,4 @@ RUN mvn clean package -DskipTests
 EXPOSE 8080
 
 # Ejecuta el JAR generado
-CMD ["java", "-jar", "target/crepelandia-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "target/crepelandia-backend-1.0.0.jar.original"]
