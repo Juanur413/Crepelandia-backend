@@ -1,0 +1,14 @@
+com\crepelandia\repository\DetallePedidoRepository.class
+com\crepelandia\model\Cliente.class
+com\crepelandia\CrepelandiaApplication.class
+com\crepelandia\controller\ProductoController.class
+com\crepelandia\repository\CategoriaRepository.class
+com\crepelandia\model\Pedido.class
+com\crepelandia\repository\ProductoRepository.class
+com\crepelandia\model\ProductoDTO.class
+com\crepelandia\repository\ClienteRepository.class
+com\crepelandia\model\Producto.class
+com\crepelandia\repository\PedidoRepository.class
+com\crepelandia\controller\HealthCheckController.class
+com\crepelandia\model\Categoria.class
+com\crepelandia\model\DetallePedido.class
