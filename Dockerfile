@@ -1,16 +1,27 @@
-# Usa Maven con JDK 17 preinstalado
-FROM maven:3.9.6-eclipse-temurin-17
+# Imagen base con Maven y Java 17
+FROM maven:3.9.6-eclipse-temurin-17 as build
+
+# Directorio de trabajo dentro del contenedor
+WORKDIR /app
+
+# Copiar el proyecto
+COPY . .
+
+# Construir el proyecto con Maven, generando el .jar ejecutable
+RUN mvn clean package -DskipTests
+
+# -----------------------------
+# Segunda etapa para ejecución
+# -----------------------------
+FROM eclipse-temurin:17-jdk
 
 WORKDIR /app
 
-# Copia todos los archivos al contenedor
-COPY . .
+# Copiar el .jar generado desde la etapa de compilación
+COPY --from=build /app/target/crepelandia-backend-1.0.0.jar .
 
-# Construye el proyecto (sin tests para velocidad)
-RUN mvn clean package -DskipTests
-
-# Expone el puerto por defecto de Spring Boot
+# Exponer el puerto por defecto de Spring Boot
 EXPOSE 8080
 
-# Ejecuta el JAR generado
-CMD ["java", "-jar", "target/crepelandia-backend-1.0.0.jar.original"]
+# Comando de ejecución
+CMD ["java", "-jar", "crepelandia-backend-1.0.0.jar"]
