@@ -38,24 +38,25 @@ public class ProductoController {
     }
 
     // Crear nuevo producto
-@PostMapping
-public Producto crearProducto(@RequestBody ProductoDTO dto) {
-    Categoria categoria = categoriaRepository.findById(dto.getIdCategoria())
-        .orElseThrow(() -> new RuntimeException("Categoría no encontrada"));
+        @PostMapping
+        public ResponseEntity<?> crearProducto(@RequestBody ProductoDTO dto) {
+            try {
+                Categoria categoria = categoriaRepository.findById(dto.getIdCategoria())
+                    .orElseThrow(() -> new RuntimeException("Categoría no encontrada"));
 
-    Producto producto = new Producto();
-    producto.setNombre(dto.getNombre());
-    producto.setPrecio(dto.getPrecio());
-    producto.setStock(dto.getStock());
-    producto.setCategoria(categoria);
-    producto.setDescripcion(dto.getDescripcion());
+                Producto producto = new Producto();
+                producto.setNombre(dto.getNombre());
+                producto.setPrecio(dto.getPrecio());
+                producto.setStock(dto.getStock());
+                producto.setDescripcion(dto.getDescripcion());
+                producto.setCategoria(categoria);
 
-    return productoRepository.save(producto);
-}
-
-
-
-
+                return ResponseEntity.ok(productoRepository.save(producto));
+            } catch (Exception e) {
+                e.printStackTrace();
+                return ResponseEntity.status(500).body("Error interno: " + e.getMessage());
+            }
+        }
 
     // Actualizar producto existente
     @PutMapping("/{id}")
