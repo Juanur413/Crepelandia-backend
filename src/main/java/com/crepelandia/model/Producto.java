@@ -23,9 +23,10 @@ public class Producto {
     private String descripcion;
 
     @ManyToOne
-    @JoinColumn(name = "categorias_id_categoria")
+    @JoinColumn(name = "id_categoria", nullable = false)
     @JsonIgnoreProperties("productos")
     private Categoria categoria;
+
 
 
 
