@@ -14,9 +14,9 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                    .allowedOrigins("https://neon-entremet-b80536.netlify.app")
-                    .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                    .allowedHeaders("*");
+                        .allowedOrigins("https://neon-entremet-b80536.netlify.app")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                        .allowedHeaders("*");
             }
         };
     }

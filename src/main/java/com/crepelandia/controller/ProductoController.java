@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "https://neon-entremet-b80536.netlify.app")
 @RestController
 @RequestMapping("/api/productos")
 public class ProductoController {
