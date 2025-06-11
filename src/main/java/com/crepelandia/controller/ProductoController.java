@@ -1,4 +1,3 @@
-
 package com.crepelandia.controller;
 
 import com.crepelandia.model.Categoria;
@@ -13,16 +12,16 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "https://neon-entremet-b80536.netlify.app")
 @RestController
 @RequestMapping("/api/productos")
 public class ProductoController {
 
     @Autowired
     private ProductoRepository productoRepository;
-
     @Autowired
     private CategoriaRepository categoriaRepository;
+
 
     // Obtener todos los productos
     @GetMapping
@@ -35,24 +34,29 @@ public class ProductoController {
     public ResponseEntity<Producto> obtenerProductoPorId(@PathVariable Integer id) {
         Optional<Producto> producto = productoRepository.findById(id);
         return producto.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+                    .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     // Crear nuevo producto
-    @PostMapping
-    public Producto crearProducto(@RequestBody ProductoDTO dto) {
-        Categoria categoria = categoriaRepository.findById(dto.getIdCategoria())
-                .orElseThrow(() -> new RuntimeException("Categoría no encontrada"));
+        @PostMapping
+        public ResponseEntity<?> crearProducto(@RequestBody ProductoDTO dto) {
+            try {
+                Categoria categoria = categoriaRepository.findById(dto.getIdCategoria())
+                    .orElseThrow(() -> new RuntimeException("Categoría no encontrada"));
 
-        Producto producto = new Producto();
-        producto.setNombre(dto.getNombre());
-        producto.setPrecio(dto.getPrecio());
-        producto.setStock(dto.getStock());
-        producto.setDescripcion(dto.getDescripcion());
-        producto.setCategoria(categoria);
+                Producto producto = new Producto();
+                producto.setNombre(dto.getNombre());
+                producto.setPrecio(dto.getPrecio());
+                producto.setStock(dto.getStock());
+                producto.setDescripcion(dto.getDescripcion());
+                producto.setCategoria(categoria);
 
-        return productoRepository.save(producto);
-    }
+                return ResponseEntity.ok(productoRepository.save(producto));
+            } catch (Exception e) {
+                e.printStackTrace();
+                return ResponseEntity.status(500).body("Error interno: " + e.getMessage());
+            }
+        }
 
     // Actualizar producto existente
     @PutMapping("/{id}")
